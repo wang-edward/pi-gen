@@ -1,0 +1,8 @@
+libdrm-dev
+libgbm-dev
+libegl-dev
+libgles-dev
+git
+build-essential
+vim
+tmux
