@@ -2,6 +2,7 @@ libdrm-dev
 libgbm-dev
 libegl-dev
 libgles-dev
+libasound2-dev
 git
 build-essential
 vim
