@@ -1,0 +1,66 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	/* Y1: 12.288MHz oscillator feeding codec MCLK */
+	fragment@0 {
+		target-path = "/";
+		__overlay__ {
+			codec_clk: codec-mclk {
+				compatible = "fixed-clock";
+				#clock-cells = <0>;
+				clock-frequency = <12288000>;
+			};
+		};
+	};
+
+	/* Codec node on i2c1 at 0x10 */
+	fragment@1 {
+		target = <&i2c1>;
+		__overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";
+
+			codec_node: max98088@10 {
+				compatible = "maxim,max98088";
+				reg = <0x10>;
+				#sound-dai-cells = <0>;
+				clocks = <&codec_clk>;
+				clock-names = "mclk";
+				status = "okay";
+			};
+		};
+	};
+
+	/* Enable the I2S controller */
+	fragment@2 {
+		target = <&i2s_clk_producer>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	/* Sound card linking I2S <-> codec */
+	fragment@3 {
+		target-path = "/";
+		__overlay__ {
+			sound_card: sound {
+				compatible = "simple-audio-card";
+				simple-audio-card,name = "ledaw-max98088";
+				simple-audio-card,format = "i2s";
+				simple-audio-card,mclk-fs = <256>;
+
+				simple-audio-card,cpu {
+					sound-dai = <&i2s_clk_producer>;
+				};
+
+				simple-audio-card,codec {
+					sound-dai = <&codec_node>;
+				};
+			};
+		};
+	};
+};
