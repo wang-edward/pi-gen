@@ -58,3 +58,5 @@ dtparam=i2c_arm=on  # i2c1, max98089
 dtparam=i2c_vc=on  # i2c0, not needed when audio hat EEPROM isn't used
 dtoverlay=ledaw-codec-overlay
 gpio=23,24=op,dh
+enable_uart=1
+dtoverlay=disable-bt
