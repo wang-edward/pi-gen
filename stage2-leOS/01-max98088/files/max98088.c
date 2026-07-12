@@ -1750,6 +1750,22 @@ static int max98088_i2c_probe(struct i2c_client *i2c)
 
 	i2c_set_clientdata(i2c, max98088);
 	max98088->pdata = i2c->dev.platform_data;
+    /* AI code start */
+	if (!max98088->pdata && i2c->dev.of_node) {
+		struct max98088_pdata *pdata;
+
+		pdata = devm_kzalloc(&i2c->dev, sizeof(*pdata), GFP_KERNEL);
+		if (!pdata)
+			return -ENOMEM;
+
+		pdata->digmic_left_mode  = of_property_read_bool(i2c->dev.of_node,
+						"maxim,digmic-left");
+		pdata->digmic_right_mode = of_property_read_bool(i2c->dev.of_node,
+						"maxim,digmic-right");
+
+		max98088->pdata = pdata;
+	}
+	/* end */
 
 	return devm_snd_soc_register_component(&i2c->dev, &soc_component_dev_max98088,
 					      &max98088_dai[0], 2);

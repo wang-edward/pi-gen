@@ -30,6 +30,8 @@
 				#sound-dai-cells = <0>;
 				clocks = <&codec_clk>;
 				clock-names = "mclk";
+                maxim,digmic-left;
+                maxim,digmic-right;
 				status = "okay";
 			};
 		};
