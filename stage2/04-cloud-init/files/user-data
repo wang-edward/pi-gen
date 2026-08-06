@@ -6,5 +6,5 @@ users:
     plain_text_passwd: YOUR_PASSWORD
     lock_passwd: false
     sudo: ALL=(ALL) NOPASSWD:ALL
-    groups: [adm, sudo, video, render, input, gpio, spi, i2c, audio]
+    groups: [adm, sudo, video, render, input, gpio, spi, i2c, audio, dialout]
     shell: /bin/bash
