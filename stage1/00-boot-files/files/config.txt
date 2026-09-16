@@ -5,7 +5,7 @@
 # Uncomment some or all of these to enable the optional hardware interfaces
 #dtparam=i2c_arm=on
 #dtparam=i2s=on
-dtparam=spi=on
+#dtparam=spi=on
 
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
@@ -53,11 +53,11 @@ dtoverlay=dwc2,dr_mode=host
 dtoverlay=nospi10
 
 [all]
-dtparam=spi=on
+dtoverlay=spi0-1cs,cs0_pin=7,no_miso
 dtparam=i2c_arm=on  # i2c1, max98089
 dtparam=i2c_vc=on  # i2c0, not needed when audio hat EEPROM isn't used
 dtoverlay=ledaw-codec-overlay
 dtoverlay=uart4
-gpio=23,24=op,dh
+gpio=22,23=op,dh  # 23, 24 on IOboard
 enable_uart=1
 dtoverlay=disable-bt
